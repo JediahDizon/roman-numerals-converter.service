@@ -4,7 +4,7 @@ For the code reviewers of Strata Health Solutions. This is the backend service o
 Frontend: https://github.com/JediahDizon/roman-numerals-converter.client
 
 ## System Requirements
-- Netbeans 8.2 (Java & Glassfish Server)
+- Netbeans 8.2 (Java EE & Glassfish Server)
 	- Required to run the web server. We use this to take advantage of the preset template that Netbeans offers for running Java EE webservers.
 
 ## Install
