@@ -1,5 +1,5 @@
 # Roman Numerals Converter - Services
-For the code reviewers of Strata Health. This is the backend service of the Roman Numerals converter. This has one endpoint that can distinguish between converting to or from roman numerals. This is accomplished by determining if the user input has letters or numbers.
+For the code reviewers of Strata Health Solutions. This is the backend service of the Roman Numerals converter. This has one endpoint that can distinguish between converting to or from roman numerals. This is accomplished by determining if the user input has letters or numbers.
 
 ## System Requirements
 - Netbeans 8.2 (Java & Glassfish Server)
