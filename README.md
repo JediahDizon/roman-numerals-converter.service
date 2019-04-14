@@ -16,7 +16,7 @@ For the code reviewers of Strata Health. This is the backend service of the Roma
 
 ## Screenshots and Videos
 #### Usage
-[Video](https://github.com/JediahDizon/roman-numerals-converter.client/blob/master/assets/Test%20Case.MOV "Use Case")
+[Download Video Footage](https://github.com/JediahDizon/roman-numerals-converter.client/blob/master/assets/Test%20Case.MOV?raw=true "Video Footage")
 
 #### JUnit Test
 ![Screenshot](https://github.com/JediahDizon/roman-numerals-converter.client/blob/master/assets/Test%20Result.png "JUnit Test")
