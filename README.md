@@ -10,6 +10,9 @@ For the code reviewers of Strata Health Solutions. This is the backend service o
 - Right click on the project name `roman-numerals-converter.service` and hit "Deploy"
 	- This will deploy the web service to the local network
 
+## Testing
+Using Netbeans' built-in JUnit testing feature, we simply open `Test Packages/services/RomanNumeralConverterTest.java` from the project workspace and hit `Run` > `Test Project` from the toolbar.
+
 ## Notes
 - We follow the "Separation of Concern" pattern by exclusively making this project an API-only service so it has no front-end
 - We access the front-end from the front-end repository
