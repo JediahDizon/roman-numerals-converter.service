@@ -1,6 +1,7 @@
 package services;
 
 import interfaces.IRomanNumeralConverter;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ public class RomanNumeralConverter implements IRomanNumeralConverter {
 	private static final Map<String, Integer> romanNumeralMap = new LinkedHashMap<String, Integer>(13);
 	static {
 		/**
-		 * This Map showcases the Roman Numerals by their unique cahracters including
+		 * This Map showcases the Roman Numerals by their unique characters including
 		 * those that are ligatured (for lack of a better word), hence we use the Linked
 		 * Hash Map library.
 		 *
@@ -48,14 +49,20 @@ public class RomanNumeralConverter implements IRomanNumeralConverter {
 	 * This function gets a String object containing roman numeral
 	 * characters and outputs the corresponding decimal value. This is implemented
 	 * by firstly determining how many consecutive occurence each roman numeral
-	 * character has on the parameterized string and performaning calculation with
+	 * character has on the parameterized string and performing calculations with
 	 * that information.
 	 *
 	 * @param romanNumeral The String of roman numerals to be converted
 	 * @return The corresponding decimal value of the parameterized roman numeral string
 	 */
 	@Override
-	public int fromRomanNumeral(String romanNumeral) {
+	public int fromRomanNumeral(String romanNumeral) throws IllegalArgumentException {
+		// Basic sanitization where it throws an error when a decimal number is detected in the roman numeral string
+		if(
+			romanNumeral == null ||
+			romanNumeral.matches(".*\\d.*")
+		) throw new IllegalArgumentException("Not a valid Roman Numeral");
+
 		int toReturn = 0;
 
 		for(String romanNumeralKey : romanNumeralMap.keySet()) {
@@ -86,6 +93,7 @@ public class RomanNumeralConverter implements IRomanNumeralConverter {
 				romanNumeral = romanNumeral.substring(charsToRemove);
 			}
 
+			// Exit out of the loop once all of the roman numerals have been eliminated
 			if(romanNumeral.length() <= 0) break;
 		}
 
@@ -102,7 +110,14 @@ public class RomanNumeralConverter implements IRomanNumeralConverter {
 	 * @return The String object representing the roman numeral value of the parameterized integer
 	 */
 	@Override
-	public String toRomanNumeral(int number) {
+	public String toRomanNumeral(int number) throws IllegalArgumentException {
+		// Basic sanitization where it throws an error if it's a negative value or over the `Integer.MAX_VALUE`
+		if
+		(
+			number < 0 ||
+			number > Integer.MAX_VALUE
+		) throw new IllegalArgumentException("Not a valid decimal value");
+
 		// Considering we append the String object to return, it's best to use a `StringBuilder` class as it uses buffer to allocate String objects
 		StringBuilder toReturn = new StringBuilder();
 

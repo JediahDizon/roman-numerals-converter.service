@@ -19,7 +19,7 @@ import services.RomanNumeralConverter;
  * @author Development
  */
 @WebServlet(name = "convert", urlPatterns = { "/convert" })
-public class main extends HttpServlet {
+public class convert extends HttpServlet {
 
 	/**
 	 * This lightweight static utility class contains functions that are mainly
@@ -54,17 +54,27 @@ public class main extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try (PrintWriter out = response.getWriter()) {
-			RomanNumeralConverter converter = new RomanNumeralConverter();
-
+			// Set the CORS value to allow access outside the domain
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			
 			String toConvert = request.getParameter("value");
-			if(Utils.isNumeric(toConvert)) {
-				// Reaching this code block means the conversion goes from decimal to roman numeral
-				int decimalValue = Integer.parseInt(toConvert);
-				out.println(converter.toRomanNumeral(decimalValue));
-			} else {
-				// Reaching this code means the conversion goes from  roman numeral to decimal
-				out.println(converter.fromRomanNumeral(toConvert));
+			RomanNumeralConverter converter = new RomanNumeralConverter();
+			try {
+				if(Utils.isNumeric(toConvert)) {
+					// Reaching this code block means the conversion goes from decimal to roman numeral
+					int decimalValue = Integer.parseInt(toConvert);
+					out.println(converter.toRomanNumeral(decimalValue));
+				} else {
+					// Reaching this code means the conversion goes from  roman numeral to decimal
+					out.println(converter.fromRomanNumeral(toConvert));
+				}	
+			} catch(IllegalArgumentException error) {
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, error.getMessage());
+			} catch(Exception error) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, error.getMessage());
 			}
+			
+			out.close();
 		}
 	}
 

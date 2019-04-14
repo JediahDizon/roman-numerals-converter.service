@@ -6,7 +6,7 @@
 package services;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -20,28 +20,50 @@ import static org.junit.Assert.*;
 public class RomanNumeralConverterTest {
 	RomanNumeralConverter converter = null;
 
-	static HashMap<String, Integer> testControlRomanNumerals = new HashMap(5);
-	static {
-		testControlRomanNumerals.put("MMCM", 2900);
-		testControlRomanNumerals.put("XLXXIX", 69);
-		testControlRomanNumerals.put("DLXLIXV", 604);
-		testControlRomanNumerals.put("CDLXLV", 495);
-		testControlRomanNumerals.put("CMLXLIII", 993);
-	};
-
-	static HashMap<Integer, String> testControlDecimals = new HashMap(5);
-	static {
-		testControlDecimals.put(6252, "MMMMMMCCLII");
-		testControlDecimals.put(9256, "MMMMMMMMMCCLVI");
-		testControlDecimals.put(26, "XXVI");
-		testControlDecimals.put(345, "CCCXLV");
-		testControlDecimals.put(1, "I");
-	};
+	// Test Controls
+	private HashMap<String, Integer> testControlRomanNumerals;
+	private HashMap<Integer, String> testControlDecimals;
+	private ArrayList<String> testBadRomanNumerals;
+	private ArrayList<Integer> testBadDecimals;
 
 	// Used for formatting time trackers
 	SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss.SSS");
 
 	public RomanNumeralConverterTest() {
+		testControlRomanNumerals = new HashMap(10);
+		testControlRomanNumerals.put("MMCM", 2900);
+		testControlRomanNumerals.put("LXIX", 69);
+		testControlRomanNumerals.put("DCIV", 604);
+		testControlRomanNumerals.put("CDXCV", 495);
+		testControlRomanNumerals.put("CMXCIII", 993);
+
+		testControlRomanNumerals.put("MMMMMMCCLII", 6252);
+		testControlRomanNumerals.put("MMMMMMMMMCCLVI", 9256);
+		testControlRomanNumerals.put("XXVI", 26);
+		testControlRomanNumerals.put("CCCXLV", 345);
+		testControlRomanNumerals.put("I", 1);
+
+		testControlDecimals = new HashMap(10);
+		testControlDecimals.put(2900, "MMCM");
+		testControlDecimals.put(69, "LXIX");
+		testControlDecimals.put(604, "DCIV");
+		testControlDecimals.put(495, "CDXCV");
+		testControlDecimals.put(993, "CMXCIII");
+
+		testControlDecimals.put(6252, "MMMMMMCCLII");
+		testControlDecimals.put(9256, "MMMMMMMMMCCLVI");
+		testControlDecimals.put(26, "XXVI");
+		testControlDecimals.put(345, "CCCXLV");
+		testControlDecimals.put(1, "I");
+
+		testBadRomanNumerals = new ArrayList<String>(3);
+		testBadRomanNumerals.add("1I");
+		testBadRomanNumerals.add("MCM242");
+		testBadRomanNumerals.add(null);
+
+		testBadDecimals = new ArrayList<Integer>(2);
+		testBadDecimals.add((int) -1.3333);
+		testBadDecimals.add(Integer.MAX_VALUE + 1);
 	}
 
 	@BeforeClass
@@ -74,7 +96,7 @@ public class RomanNumeralConverterTest {
 			int expectedValue = testControlRomanNumerals.get(romanNumeral);
 
 			assertNotNull(actualValue);
-			assertEquals(actualValue, expectedValue);
+			assertEquals(expectedValue, actualValue);
 		}
 	}
 
@@ -87,8 +109,41 @@ public class RomanNumeralConverterTest {
 			String expectedValue = testControlDecimals.get(decimalNumber);
 
 			assertNotNull(actualValue);
-			assertEquals(actualValue, expectedValue);
+			assertEquals(expectedValue, actualValue);
 		}
 	}
 
+	@Test
+	public void testBadRomanNumerals() {
+		for(String badInput : testBadRomanNumerals) {
+			System.out.println("Bad Roman Numeral: " + badInput);
+
+			boolean toReturn = false;
+
+			try {
+				converter.fromRomanNumeral(badInput);
+			} catch(IllegalArgumentException error) {
+				toReturn = true;
+			}
+
+			assertTrue(toReturn);
+		}
+	}
+
+	@Test
+	public void testBadDecimals() {
+		for(int badInput : testBadDecimals) {
+			System.out.println("Bad Decimal: " + badInput);
+
+			boolean toReturn = false;
+
+			try {
+				converter.toRomanNumeral(badInput);
+			} catch(IllegalArgumentException error) {
+				toReturn = true;
+			}
+
+			assertTrue(toReturn);
+		}
+	}
 }
