@@ -8,7 +8,8 @@ Frontend: https://github.com/JediahDizon/roman-numerals-converter.client
 	- Required to run the web server. We use this to take advantage of the preset template that Netbeans offers for running Java EE webservers.
 
 ## Install
-- Open NetBeans 8.2 and import the project in the workspace (made possible by the `./nbproject` directory)
+- Open NetBeans and import the `Web Application` project in the workspace (made possible by the `./nbproject` directory)
+- If that does not work, create new project with "Java Web > Web Project with Existing Sources" and point the sources to the project directory
 - Right click on the project name `roman-numerals-converter.service` and hit "Deploy"
 	- This will deploy the web service to the local network
 
